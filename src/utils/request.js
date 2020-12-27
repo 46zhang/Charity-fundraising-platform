@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getResultResData } from './format';
 import { getToken } from './tokenUtils';
-import { isUndef } from './index';
+import { getReqDataSequence, isUndef } from './index';
 
 const service = axios.create({
     // process.env.NODE_ENV === 'development' 来判断是否开发环境
@@ -14,10 +14,13 @@ const service = axios.create({
 });
 
 // 添加请求拦截器，在请求头中加token
-axios.interceptors.request.use(
+service.interceptors.request.use(
     config => {
-        if (getToken('Authorization')) {
-            config.headers.Authorization = getToken();
+        let token = getToken('Authorization');
+        //console.log(token);
+        if (token) {
+            config.headers.Authorization = token;
+            //console.log(token);
         }
 
         return config;
@@ -37,7 +40,7 @@ service.interceptors.response.use(
                 isSuccess: false,
                 data: {},
                 msg: '请求发不出去，请检查您的网络。如果您的网络正常，请联系服务器管理人员'
-            }
+            };
         }
         let status = error.response.status;
 
@@ -69,4 +72,24 @@ service.interceptors.response.use(
     }
 );
 
-export default service;
+class Request {
+
+    post(url, data) {
+        return service.post(url, data);
+    }
+
+    upload(url, data) {
+        return service.post(url, data, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+    }
+    get(url) {
+        return service.get(url);
+    }
+    getWithParam(url,data){
+        url+="?" + getReqDataSequence(data);
+        return service.get(url);
+    }
+};
+
+export default new Request();

@@ -12,60 +12,53 @@
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="活动名称">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.projectName"></el-input>
                     </el-form-item>
-<!--                    <el-form-item label="选择器">-->
-<!--                        <el-select v-model="form.region" placeholder="请选择">-->
-<!--                            <el-option key="bbk" label="步步高" value="bbk"></el-option>-->
-<!--                            <el-option key="xtc" label="小天才" value="xtc"></el-option>-->
-<!--                            <el-option key="imoo" label="imoo" value="imoo"></el-option>-->
-<!--                        </el-select>-->
-<!--                    </el-form-item>-->
-                    <el-form-item label="募捐时间">
+                    <el-form-item label="起始时间">
                         <el-col :span="11">
                             <el-date-picker
-                                type="date"
-                                placeholder="选择日期"
-                                v-model="form.date1"
-                                value-format="yyyy-MM-dd"
-                                style="width: 100%;"
+                                    type="date"
+                                    placeholder="选择日期"
+                                    v-model="form.projectStartTime"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"
                             ></el-date-picker>
                         </el-col>
                         <el-col class="line" :span="2">-</el-col>
                         <el-col :span="11">
                             <el-time-picker
-                                placeholder="选择时间"
-                                v-model="form.date2"
-                                style="width: 100%;"
-                            ></el-time-picker>
+                                    v-model="value1"
+                                    format = 'HH:mm:ss'
+                                    value-format = 'HH:mm:ss'
+                                    placeholder="任意时间点">
+                            </el-time-picker>
                         </el-col>
                     </el-form-item>
-
-<!--                    <el-form-item label="城市级联">-->
-<!--                        <el-cascader :options="options" v-model="form.options"></el-cascader>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="选择开关">-->
-<!--                        <el-switch v-model="form.delivery"></el-switch>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="多选框">-->
-<!--                        <el-checkbox-group v-model="form.type">-->
-<!--                            <el-checkbox label="步步高" name="type"></el-checkbox>-->
-<!--                            <el-checkbox label="小天才" name="type"></el-checkbox>-->
-<!--                            <el-checkbox label="imoo" name="type"></el-checkbox>-->
-<!--                        </el-checkbox-group>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="单选框">-->
-<!--                        <el-radio-group v-model="form.resource">-->
-<!--                            <el-radio label="步步高"></el-radio>-->
-<!--                            <el-radio label="小天才"></el-radio>-->
-<!--                            <el-radio label="imoo"></el-radio>-->
-<!--                        </el-radio-group>-->
-<!--                    </el-form-item>-->
+                    <el-form-item label="`结束时间">
+                        <el-col :span="11">
+                            <el-date-picker
+                                    type="date"
+                                    placeholder="选择时间"
+                                    v-model="form.projectFinishTime"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"
+                            ></el-date-picker>
+                        </el-col>
+                        <el-col class="line" :span="2">-</el-col>
+                        <el-col :span="11">
+                            <el-time-picker
+                                    v-model="value2"
+                                    format = 'HH:mm:ss'
+                                    value-format = 'HH:mm:ss'
+                                    placeholder="任意时间点">
+                            </el-time-picker>
+                        </el-col>
+                    </el-form-item>
                     <el-form-item label="活动说明">
-                        <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
+                        <el-input type="textarea" rows="5" v-model="form.projectExplain"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <Upload></Upload>
+                        <Upload v-on:child-say="getUrlFromChild"></Upload>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -79,81 +72,45 @@
 
 <script>
     import Upload from './Upload';
-export default {
-    name: 'baseform',
-    data() {
-        return {
-            options: [
-                {
-                    value: 'guangdong',
-                    label: '广东省',
-                    children: [
-                        {
-                            value: 'guangzhou',
-                            label: '广州市',
-                            children: [
-                                {
-                                    value: 'tianhe',
-                                    label: '天河区'
-                                },
-                                {
-                                    value: 'haizhu',
-                                    label: '海珠区'
-                                }
-                            ]
-                        },
-                        {
-                            value: 'dongguan',
-                            label: '东莞市',
-                            children: [
-                                {
-                                    value: 'changan',
-                                    label: '长安镇'
-                                },
-                                {
-                                    value: 'humen',
-                                    label: '虎门镇'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    value: 'hunan',
-                    label: '湖南省',
-                    children: [
-                        {
-                            value: 'changsha',
-                            label: '长沙市',
-                            children: [
-                                {
-                                    value: 'yuelu',
-                                    label: '岳麓区'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
-            form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: true,
-                type: ['步步高'],
-                resource: '小天才',
-                desc: '',
-                options: []
-            }
-        };
-    },
-    components:{Upload},
-    methods: {
-        onSubmit() {
-            this.$message.success('提交成功！');
-        }
-    },
+    import { createActivity, updateActivity } from '../../api/activity';
 
-};
+    export default {
+        name: 'baseform',
+        components: { Upload },
+        data() {
+            return {
+                form: {
+                    projectName: '',
+                    projectStartTime: '',
+                    projectFinishTime: '',
+                    projectExplain: '',
+                    projectPhoto: ''
+                },
+                value1: '',
+                value2: ''
+            }
+        },
+        methods: {
+            //从组件传递数据到这个父组件
+            getUrlFromChild(url) {
+                this.form.projectPhoto = url;
+                //alert(url);
+            },
+            onSubmit() {
+                let _this = this;
+                //格式化一下时间
+                _this.form.projectStartTime += " "+_this.value1;
+                _this.form.projectFinishTime +=" "+ _this.value2;
+                createActivity(_this.form).then(res => {
+                    if (res.isSuccess) {
+                        alert("创建成功");
+                        //TODO  redirct to get activity List page
+                    } else {
+                        alert(res.msg);
+                    }
+                });
+            }
+        },
+
+    };
 </script>

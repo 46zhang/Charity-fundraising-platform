@@ -42,9 +42,9 @@ export default new Router({
                 },
                 {
                     // 富文本编辑器组件
-                    path: '/editor',
-                    component: () => import(/* webpackChunkName: "editor" */ '../components/page/VueEditor.vue'),
-                    meta: { title: '富文本编辑器' }
+                    path: '/activityManager',
+                    component: () => import(/* webpackChunkName: "editor" */ '../components/page/ActivityManage.vue'),
+                    meta: { title: '活动管理' }
                 },
                 {
                     // markdown组件
@@ -59,10 +59,9 @@ export default new Router({
                     meta: { title: '文件上传' }
                 },
                 {
-                    // vue-schart组件
-                    path: '/charts',
-                    component: () => import(/* webpackChunkName: "chart" */ '../components/page/BaseCharts.vue'),
-                    meta: { title: 'schart图表' }
+                    path: '/activity',
+                    component: () => import(/* webpackChunkName: "chart" */ '../components/page/ActivityDetail'),
+                    meta: { title: '活动详情' }
                 },
                 {
                     // 拖拽列表组件

@@ -73,7 +73,7 @@ export default {
                 },
                 {
                     icon: 'el-icon-lx-calendar',
-                    index: '3',
+                    index: 'activityManager',
                     title: '活动管理',
                 },
                 {

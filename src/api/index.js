@@ -7,3 +7,7 @@ export const fetchData = query => {
         params: query
     });
 };
+
+export  function uploadFile(file){
+    return request.upload('/user/uploadPhoto',file);
+}
