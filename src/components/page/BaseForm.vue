@@ -105,6 +105,7 @@
                     if (res.isSuccess) {
                         alert("创建成功");
                         //TODO  redirct to get activity List page
+                        this.$router.push('/dashboard')
                     } else {
                         alert(res.msg);
                     }

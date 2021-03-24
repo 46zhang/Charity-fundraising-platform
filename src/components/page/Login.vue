@@ -30,7 +30,7 @@
 <script>
     import {mapMutations } from 'vuex';
     import { login } from '../../api/login';
-    import { setToken } from '../../utils/tokenUtils';
+    import { setToken, setUsername } from '../../utils/tokenUtils';
     export default {
         data: function() {
             return {
@@ -61,11 +61,13 @@
                         }
                         _this.userToken = 'Bearer ' + res.data.token;
                         setToken(_this.userToken);
-                        _this.$router.push('/home');
+                        //设置用户名
+                        setUsername(res.data.userName);
+                        _this.$router.push('/dashboard');
                         alert('登陆成功');
                     }).catch(error => {
                         alert("bbb"+error.msg);
-                        console.log(error);
+                       // console.log(error);
                     });
 
                 }

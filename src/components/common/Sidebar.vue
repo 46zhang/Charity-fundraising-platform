@@ -68,8 +68,8 @@ export default {
                 },
                 {
                     icon: 'el-icon-lx-cascades',
-                    index: 'table',
-                    title: '用户管理'
+                    index: 'financial',
+                    title: '财务管理'
                 },
                 {
                     icon: 'el-icon-lx-calendar',

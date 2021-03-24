@@ -5,7 +5,7 @@
                 <el-card shadow="hover" class="mgb20">
                     <el-col span="10">
                         <div class="activity-image-info">
-                            <img src="../../assets/img/img.jpg" class="activity-avatar" alt/>
+                            <img :src=project.projectPhoto class="activity-avatar" alt/>
                         </div>
                     </el-col>
                     <el-col span="10">
@@ -13,14 +13,20 @@
                             <el-row>
                                 <h3>募捐活动标题:</h3>
                                 <div class="activity-text-info-title">
-                                    AOIFHAOHFAFAFANFLADBFLADFAUOGUOGOHUAGUGUGGYGYGYYFGF
+                                    {{project.projectName}}
                                 </div>
                             </el-row>
                             <el-row>
-                                <div class="user-info-list">项目开始时间：<span>2018-01-01 00:00:00</span></div>
+                                <h3>募捐活动状态:</h3>
+                                <div class="activity-text-info-title">
+                                    {{project.projectState}}
+                                </div>
                             </el-row>
                             <el-row>
-                                <div class="user-info-list">项目结束时间：<span>2022-01-01 00:00:00</span></div>
+                                <div class="user-info-list">项目开始时间：<span>{{project.projectStartTime}}</span></div>
+                            </el-row>
+                            <el-row>
+                                <div class="user-info-list">项目结束时间：<span>{{project.projectFinishTime}}</span></div>
                             </el-row>
                         </div>
                     </el-col>
@@ -30,16 +36,7 @@
                         <span>项目介绍</span>
                     </div>
                     <div>
-                        sfdaofhadhufhda iaufau if
-                        afgsuidfhglsidglisdg
-                        adsfbsidbfuisdg
-                        sdnhgsdhgosdhgosdg
-                        sdgosdhgohsodgsdg
-                        sdohgosdhgohsdgohsg
-                        sdbgosdhgsdg
-                        shgoishgoisfdg
-                        sdhgsdhg
-                        egfoishguhsuighsduighusodhgoisdhgsdhg
+                        {{project.projectExplain}}
                     </div>
                 </el-card>
             </el-col>
@@ -50,7 +47,7 @@
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-lx-people grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">1234</div>
+                                    <div class="grid-num">{{project.projectPeopleNums}}</div>
                                     <div>募捐人次</div>
                                 </div>
                             </div>
@@ -61,7 +58,7 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-lx-notice grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">32100</div>
+                                    <div class="grid-num">{{project.projectMoneyTarget}}</div>
                                     <div>目标金额</div>
                                 </div>
                             </div>
@@ -72,7 +69,7 @@
                             <div class="grid-content grid-con-3">
                                 <i class="el-icon-lx-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">5000</div>
+                                    <div class="grid-num">{{project.projectMoneyNow}}</div>
                                     <div>实际募捐金额</div>
                                 </div>
                             </div>
@@ -88,7 +85,7 @@
 
                                     oninput="value=value.replace(/[^\d.]/g,'')"
 
-                                    v-model="form.amnount"
+                                    v-model="form.amount"
 
                                     placeholder="请输本次募捐金额"
 
@@ -102,16 +99,8 @@
 
                             ></el-input>
                         </el-row>
-
-                        <el-row>
-                            <el-input
-                                    placeholder="输入支付密码"
-                                    v-model="form.password"
-                                    clearable>
-                            </el-input>
-                        </el-row>
                         <span></span>
-                        <el-button type="primary">确认支付</el-button>
+                        <el-button type="primary" @click="doDonate">确认支付</el-button>
                     </el-form>
                 </el-card>
             </el-col>
@@ -120,16 +109,59 @@
 </template>
 
 <script>
+    import { donate, getActivityDetail } from '../../api/activity';
+
     export default {
         name: "ActivityDetail",
-
+        created() {
+            //获取数据
+            this.getDetail(this.$route.query.id)
+        },
         data() {
             return {
-                form:{
-                    amount: "",
-                    password: ""
+                project: {
+                    userId: "发起项目的用户的id",
+                    projectId: "项目id",
+                    projectStartTime: "开始时间",//yyyy-MM-dd HH:mm:ss
+                    projectFinishTime: "结束时间",
+                    projectState: "项目状态",
+                    projectName: "项目名字",
+                    projectPeopleNums: "项目捐款人次",
+                    projectMoneyTarget: "目标金额",
+                    projectMoneyNow: "已获得金额",
+                    projectPhoto: "项目头像",
+                    projectExplain: "项目简介",
+                },
+                form: {
+                    amount: 0
                 }
             };
+        },
+        methods: {
+            //获取数据
+            async getDetail(id) {
+                const { isSuccess, msg, data } = await getActivityDetail({
+                    projectId: id
+                });
+                if (isSuccess === true) {
+                    this.project = data;
+                } else {
+                    alert(msg)
+                }
+            },
+            doDonate() {
+                donate({
+                    projectId: this.project.projectId,
+                    money: this.form.amount
+                }).then(res => {
+                    if (res.isSuccess) {
+                        alert("创建成功");
+                    } else {
+                        alert(res.msg);
+                    }
+                }
+                    );
+            }
         }
     }
 </script>
@@ -190,25 +222,12 @@
         color: rgb(242, 94, 67);
     }
 
-    .user-info {
-        display: flex;
-        align-items: flex-start;
-        padding-bottom: 20px;
-        border-right: 2px solid #ccc;
-        margin-bottom: 20px;
-    }
 
     .activity-avatar {
         width: 240px;
         height: 250px;
     }
 
-    .user-info-cont {
-        /*padding-left: 50px;*/
-        flex: 1;
-        color: #999;
-        margin-right: 20px;
-    }
 
     .activity-image-info {
         font-size: 14px;
@@ -219,10 +238,6 @@
     .activity-text-info {
         font-size: 14px;
         margin-right: 20px;
-    }
-
-    .activity-text-info-button {
-        align-items: flex-end;
     }
 
     .activity-text-info-title {

@@ -30,7 +30,8 @@
                                     </div>
                                 </el-row>
                                 <el-row class="activity-text-info-button">
-                                    <el-button type="primary">查看详情</el-button>
+                                    <el-button type="primary" @click="getDetail(item.projectId)" >查看详情
+                                    </el-button>
                                 </el-row>
                             </div>
                         </el-col>
@@ -100,7 +101,7 @@
             };
         },
         created() {
-            console.log(this.pageIndex - 1)
+           // console.log(this.pageIndex - 1)
             //在新进入时先获取活动
             this.getList(this.pageIndex - 1)
         },
@@ -115,15 +116,21 @@
                     pageIndex: pageIndex,
                     pageSize: this.pageSize
                 });
-                if (isSuccess === true) {
-                    this.pageIndex = data.pageIndex + 1;
-                    this.pageSize = data.pageSize;
-                    this.totalPage = data.totalPage;
-                    this.project = data.project;
-                } else {
+                    if (isSuccess === true) {
+                        this.pageIndex = data.pageIndex + 1;
+                        this.pageSize = data.pageSize;
+                        this.totalPage = data.totalPage;
+                        this.project = data.project;
+                    } else {
                     alert(msg)
                 }
 
+            },
+
+            getDetail(id) {
+               // console.log("id: "+id);
+                this.$router.push({ path: '/detail', query: { id: id } })
+                // this.$router.push({name:'detail',params: {id:id}})  // 只能用 name
             }
         }
     };

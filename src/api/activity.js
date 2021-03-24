@@ -21,10 +21,7 @@ export function getActivityList(jsonObj) {
 *
 * */
 export function getActivityDetail(jsonObj) {
-    return request({
-        url: '/user/readList'+getReqDataSequence(jsonObj),
-        method: 'get',
-    })
+    return request.getWithParam('user/readProjectDetail', jsonObj)
 }
 
 
@@ -49,4 +46,9 @@ export function updateActivity(obj) {
         projectPhoto:obj.projectPhoto
     };
     return request.post('/user/launch',data);
+}
+
+
+export function donate(obj) {
+    return request.getWithParam('/user/contribution',obj);
 }

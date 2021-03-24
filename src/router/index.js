@@ -31,6 +31,11 @@ export default new Router({
                     meta: { title: '基础表格' }
                 },
                 {
+                    path: '/financial',
+                    component: () => import(/* webpackChunkName: "table" */ '../components/page/Financial.vue'),
+                    meta: { title: '财务管理' }
+                },
+                {
                     path: '/tabs',
                     component: () => import(/* webpackChunkName: "tabs" */ '../components/page/Tabs.vue'),
                     meta: { title: 'tab选项卡' }
@@ -59,7 +64,7 @@ export default new Router({
                     meta: { title: '文件上传' }
                 },
                 {
-                    path: '/activity',
+                    path: '/detail',
                     component: () => import(/* webpackChunkName: "chart" */ '../components/page/ActivityDetail'),
                     meta: { title: '活动详情' }
                 },

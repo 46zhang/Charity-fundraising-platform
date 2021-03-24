@@ -120,7 +120,7 @@
             };
         },
         created() {
-            getActivityList({ pageSize: 10, pageIndex: 1 });
+            //getActivityList({ pageSize: 10, pageIndex: 1 });
         },
         methods: {
             // 获取 easy-mock 的模拟数据
