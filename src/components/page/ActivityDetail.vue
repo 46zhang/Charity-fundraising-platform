@@ -58,7 +58,7 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-lx-notice grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">{{project.projectMoneyTarget}}</div>
+                                    <div class="grid-num">￥1000000</div>
                                     <div>目标金额</div>
                                 </div>
                             </div>
