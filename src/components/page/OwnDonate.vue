@@ -47,18 +47,14 @@
                         prop="userId"
                         label="所属用户id"
                         sortable>
-                    <template scope="scope">
-                        <router-link :to="{path:'/userDonate', query: { userId: scope.row.userId }}">
-                            {{scope.row.userId}}
-                        </router-link>
-                    </template>
                 </el-table-column>
                 <el-table-column
                         prop="projectId"
                         label="所属项目"
                         sortable>
                     <template scope="scope">
-                        <router-link :to="{path:'/projectDonate', query: { projectId: scope.row.projectId }}">
+                        <router-link
+                                :to="{path:'/projectDonate', query: { projectId: scope.row.projectId ,userId: scope.row.userId }}">
                             {{scope.row.projectId}}
                         </router-link>
                     </template>
@@ -69,30 +65,17 @@
                         sortable>
                 </el-table-column>
 
-                <!--                <el-table-column label="操作" fixed="right">-->
-                <!--                    <template scope="scope">-->
-                <!--                        <el-button-->
-                <!--                                size="mini"-->
-                <!--                                type="primary"-->
-                <!--                                @click="getUserContribution(scope.$index, scope.row)">用户捐款-->
-                <!--                        </el-button>-->
-                <!--                        <el-button-->
-                <!--                                size="mini"-->
-                <!--                                type="info"-->
-                <!--                                @click="getProjectFund(scope.$index, scope.row)">项目捐款-->
-                <!--                        </el-button>-->
-                <!--                    </template>-->
-                <!--                </el-table-column>-->
             </el-table>
         </template>
     </div>
 </template>
 
 <script>
-    import { getAllBlock } from '../../api/financial';
+    import { getAllBlock, getUserOwnContribution } from '../../api/financial';
+    import { getUserId } from '../../utils/tokenUtils';
 
     export default {
-        name: 'donate',
+        name: 'ownDonate',
         data() {
             return {
                 fund: [{
@@ -117,13 +100,14 @@
             }
         },
         created() {
+            let userId = getUserId();
             // console.log(this.pageIndex - 1)
             //在新进入时先获取活动
-            this.getAllBlock()
+            this.getUserOwnContribution(userId)
         },
         methods: {
-            async getAllBlock() {
-                const { isSuccess, msg, data } = await getAllBlock();
+            async getUserOwnContribution(userId) {
+                const { isSuccess, msg, data } = await getUserOwnContribution({ userId: userId });
                 if (isSuccess === true) {
                     this.fund = data;
                 } else {
@@ -131,19 +115,6 @@
                 }
 
             },
-            //跳转到捐款页面
-            getUserContribution(index, row) {
-                console.log("要传的id:" + row.userId);
-                let userId = row.userId;
-                this.$router.push({
-                    path: '/userDonate', params: {
-                        userId: userId
-                    }
-                });
-            },
-            getProjectFund(index, row) {
-
-            }
         }
     };
 </script>

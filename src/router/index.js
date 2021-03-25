@@ -93,6 +93,24 @@ export default new Router({
                     meta: { title: '权限测试', permission: true }
                 },
                 {
+                    // 用户捐款页面
+                    path: '/userDonate',
+                    component: () => import(/* webpackChunkName: "permission" */ '../components/page/UserDonate.vue'),
+                    meta: { title: '用户捐款' }
+                },
+                {
+                    // 用户捐款页面
+                    path: '/ownDonate',
+                    component: () => import(/* webpackChunkName: "permission" */ '../components/page/OwnDonate.vue'),
+                    meta: { title: '个人捐款' }
+                },
+                {
+                    // 项目捐款页面
+                    path: '/projectDonate',
+                    component: () => import(/* webpackChunkName: "permission" */ '../components/page/ProjectDonate.vue'),
+                    meta: { title: '项目捐款' }
+                },
+                {
                     path: '/404',
                     component: () => import(/* webpackChunkName: "404" */ '../components/page/404.vue'),
                     meta: { title: '404' }
@@ -105,7 +123,7 @@ export default new Router({
                 {
                     path: '/donate',
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/Donate.vue'),
-                    meta: { title: '支持作者' }
+                    meta: { title: '捐款情况' }
                 }
             ]
         },

@@ -28,9 +28,10 @@
 </template>
 
 <script>
-    import {mapMutations } from 'vuex';
+    import { mapMutations } from 'vuex';
     import { login } from '../../api/login';
-    import { setToken, setUsername } from '../../utils/tokenUtils';
+    import { getUserId, setToken, setUserId, setUsername } from '../../utils/tokenUtils';
+
     export default {
         data: function() {
             return {
@@ -54,20 +55,22 @@
                 if (this.loginForm.username === '' || this.loginForm.password === '') {
                     alert('账号或密码不能为空');
                 } else {
-                    login(_this.loginForm.username,_this.loginForm.password).then((res) => {
-                        if(res.isSuccess==false){
-                            alert("aaa"+res.msg);
+                    login(_this.loginForm.username, _this.loginForm.password).then((res) => {
+                        if (res.isSuccess == false) {
+                            alert("aaa" + res.msg);
                             return;
                         }
                         _this.userToken = 'Bearer ' + res.data.token;
                         setToken(_this.userToken);
                         //设置用户名
                         setUsername(res.data.userName);
+                        setUserId(res.data.userId);
+                        console.log("用户id" + getUserId());
                         _this.$router.push('/dashboard');
                         alert('登陆成功');
                     }).catch(error => {
-                        alert("bbb"+error.msg);
-                       // console.log(error);
+                        alert("bbb" + error.msg);
+                        // console.log(error);
                     });
 
                 }
