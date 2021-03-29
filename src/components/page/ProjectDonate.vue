@@ -8,15 +8,16 @@
                                       :icon="'el-icon-plus'"
                                       :type="'success'"
                                       :size="'large'"
-                                      :timestamp="item.time"
+                                      :timestamp="item.to"
                     >
                         <el-card>
                             <h3>项目名称: {{item.projectName}}</h3>
+                            <h4>付钱节点 {{item.from}}</h4>
+                            <h4>收钱节点 {{item.to}}</h4>
                             <span></span>
                             <p>用户 {{item.userName}}</p>
                             <p>金额 {{item.money}}</p>
-                            <p>付钱节点 {{item.from}}</p>
-                            <p>收钱节点 {{item.to}}</p>
+
                         </el-card>
                     </el-timeline-item>
                 </div>
@@ -27,15 +28,15 @@
                                       :icon="'el-icon-minus'"
                                       :type="'danger'"
                                       :size="'large'"
-                                      :timestamp="item.time"
+                                      :timestamp="item.to"
                     >
                         <el-card>
                             <h3>项目名称: {{item.projectName}}</h3>
+                            <h4>付钱节点 {{item.from}}</h4>
+                            <h4>收钱节点 {{item.to}}</h4>
                             <span></span>
                             <p>用户 {{item.userName}}</p>
                             <p>金额 {{item.money}}</p>
-                            <p>付钱节点 {{item.from}}</p>
-                            <p>收钱节点 {{item.to}}</p>
                         </el-card>
                     </el-timeline-item>
                 </div>

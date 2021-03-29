@@ -9,7 +9,6 @@
                     :default-sort="{prop: 'blockIndex', order: 'descending'}"
             >
                 <el-table-column
-                        fixed
                         prop="blockIndex"
                         label="区块号"
                         width="180"
