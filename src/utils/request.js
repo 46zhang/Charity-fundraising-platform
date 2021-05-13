@@ -3,16 +3,28 @@ import { getResultResData } from './format';
 import { getToken } from './tokenUtils';
 import { getReqDataSequence, isUndef } from './index';
 
+// const service = axios.create({
+//     // process.env.NODE_ENV === 'development' 来判断是否开发环境
+//     // easy-mock服务挂了，暂时不使用了
+//     baseURL: '/api/fundraising',
+//     timeout: 5000,
+//     headers: {
+//         'Content-Type': 'application/json'
+//     }
+// });
+
 const service = axios.create({
     // process.env.NODE_ENV === 'development' 来判断是否开发环境
-    // easy-mock服务挂了，暂时不使用了
-    baseURL: '/api/fundraising',
+
+    baseURL: process.env.NODE_ENV === 'production'
+        ? '/fundraising'
+        : '/api/fundraising',
+    // changeOrigin: true,//是否允许跨越
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json'
     }
 });
-
 // 添加请求拦截器，在请求头中加token
 service.interceptors.request.use(
     config => {

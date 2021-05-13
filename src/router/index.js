@@ -4,7 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 export default new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         {
             path: '/',
@@ -107,7 +107,7 @@ export default new Router({
                 {
                     // 项目捐款页面
                     path: '/projectDonate',
-                    component: () => import(/* webpackChunkName: "permission" */ '../components/page/ProjectDonate.vue'),
+                    component: () => import(/* webpackChunkName: "permission" */ '../components/page/ProjectFundGraph.vue'),
                     meta: { title: '项目捐款' }
                 },
                 {

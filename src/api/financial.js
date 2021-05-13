@@ -29,6 +29,21 @@ export function getOneProjectFund(jsonObj) {
     return request.getWithParam('/manage/getProjectFundFlow', jsonObj);
 }
 
+export function getProjectFundGraph(jsonObj) {
+
+    return request.getWithParam('/manage/getProjectFundGraph', jsonObj);
+}
+
+export function getOneUserProjectFundGraph(jsonObj) {
+
+    return request.getWithParam('/user/getOneUserProjectFundGraph', jsonObj);
+}
+
+export function getUserFundGraph(jsonObj) {
+
+    return request.getWithParam('/manage/getUserFundGraph', jsonObj);
+}
+
 
 export function getUserContribution(json) {
 
